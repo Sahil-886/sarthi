@@ -7,6 +7,7 @@ import StressMeter from '../components/StressMeter';
 import StressTrajectoryChart from '../components/StressTrajectoryChart';
 import StreakCard from '../components/StreakCard';
 import HabitTracker from '../components/HabitTracker';
+import LevelCard from '../components/LevelCard';
 
 // ── Daily wellness tips (cycling) ─────────────────────────────────────────────
 const TIPS = [
@@ -391,8 +392,11 @@ export default function Dashboard() {
             <h2 className="text-xl font-bold text-stone-800">Daily Progress & Habits</h2>
             <div className="h-px flex-1 bg-stone-200" />
           </motion.div>
-          <div className="max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
+              <LevelCard />
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }}>
               <HabitTracker />
             </motion.div>
           </div>
