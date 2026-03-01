@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface FocusGameProps {
-    onComplete: (score: number) => void;
+    onComplete: (score: number, extra?: any) => void;
     onBack: () => void;
 }
 
