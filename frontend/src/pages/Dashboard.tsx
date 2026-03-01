@@ -6,7 +6,6 @@ import api from '../api/api';
 import StressMeter from '../components/StressMeter';
 import StressTrajectoryChart from '../components/StressTrajectoryChart';
 import StreakCard from '../components/StreakCard';
-import LevelCard from '../components/LevelCard';
 import HabitTracker from '../components/HabitTracker';
 
 // ── Daily wellness tips (cycling) ─────────────────────────────────────────────
@@ -389,14 +388,11 @@ export default function Dashboard() {
         {/* ── FOOTER NOTE ───────────────────────────────────────────── */}
         <div id="habits" className="mb-2 mt-8">
           <motion.div className="flex items-center gap-3 mb-5" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }}>
-            <h2 className="text-xl font-bold text-stone-800">Progress & Habits</h2>
+            <h2 className="text-xl font-bold text-stone-800">Daily Progress & Habits</h2>
             <div className="h-px flex-1 bg-stone-200" />
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.58 }}>
-              <LevelCard />
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.63 }}>
+          <div className="max-w-2xl mx-auto">
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
               <HabitTracker />
             </motion.div>
           </div>
