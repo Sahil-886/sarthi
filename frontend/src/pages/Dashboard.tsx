@@ -57,9 +57,9 @@ const MENU_ITEMS = [
     id: 'habits', name: 'Daily Habits',
     description: 'Track small daily steps that lead to big life changes',
     icon: '✅', path: '#habits',
-    gradient: 'from-emerald-400 to-teal-500',
+    gradient: 'from-amber-400 to-orange-500',
     badge: 'Habits',
-    badgeColor: 'bg-emerald-100 text-emerald-700',
+    badgeColor: 'bg-amber-100 text-amber-700',
   },
   {
     id: 'contact', name: 'Contact & Support',
