@@ -57,9 +57,9 @@ const MENU_ITEMS = [
     id: 'habits', name: 'Daily Habits',
     description: 'Track small daily steps that lead to big life changes',
     icon: '✅', path: '#habits',
-    gradient: 'from-amber-400 to-orange-500',
+    gradient: 'from-emerald-400 to-teal-500',
     badge: 'Habits',
-    badgeColor: 'bg-amber-100 text-amber-700',
+    badgeColor: 'bg-emerald-100 text-emerald-700',
   },
   {
     id: 'contact', name: 'Contact & Support',
@@ -172,10 +172,26 @@ export default function Dashboard() {
             <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-md ring-2 ring-white">
               {user?.firstName?.charAt(0) || user?.primaryEmailAddress?.emailAddress?.charAt(0).toUpperCase() || 'S'}
             </div>
-            <div>
-              <h1 className="text-lg font-bold text-stone-800 leading-tight">{greeting()}, {user?.firstName || 'Friend'} 👋</h1>
-              <p className="text-stone-400 text-xs">Your mental wellness dashboard</p>
-            </div>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{
+                visible: { transition: { staggerChildren: 0.1 } }
+              }}
+            >
+              <motion.h1
+                variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }}
+                className="text-lg font-bold text-stone-800 leading-tight"
+              >
+                {greeting()}, {user?.firstName || 'Friend'} 👋
+              </motion.h1>
+              <motion.p
+                variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }}
+                className="text-stone-400 text-xs"
+              >
+                Your mental wellness dashboard
+              </motion.p>
+            </motion.div>
           </div>
           <div className="flex gap-2 items-center">
             <motion.button
@@ -219,11 +235,20 @@ export default function Dashboard() {
 
         {/* ── Daily Tip Banner ──────────────────────────────────────── */}
         <motion.div
-          className="mb-7 flex items-center gap-4 bg-white/70 border border-amber-100 rounded-2xl px-5 py-4 shadow-sm backdrop-blur-sm"
-          initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
+          className="mb-7 flex items-center gap-4 bg-white/70 border border-amber-100 rounded-2xl px-5 py-4 shadow-sm backdrop-blur-sm relative overflow-hidden"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 100 }}
         >
-          <span className="text-3xl shrink-0">{tip.emoji}</span>
-          <div>
+          <div className="absolute inset-0 opacity-5 animate-shimmer" style={{ backgroundSize: '100% 100%' }} />
+          <motion.span
+            className="text-3xl shrink-0"
+            animate={{ rotate: [0, 10, -10, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+          >
+            {tip.emoji}
+          </motion.span>
+          <div className="relative z-10">
             <p className="text-xs font-bold text-amber-600 uppercase tracking-wider mb-0.5">Today's Wellness Tip</p>
             <p className="text-stone-700 text-sm font-medium leading-snug">{tip.tip}</p>
           </div>
@@ -242,9 +267,9 @@ export default function Dashboard() {
             <p className="text-stone-400 text-xs font-bold uppercase tracking-wider mb-3">Current Stress Level</p>
 
             {loading ? (
-              <div className="space-y-3">
-                <div className="h-10 w-40 bg-amber-100 rounded-xl animate-pulse" />
-                <div className="h-3 w-full bg-amber-100 rounded-full animate-pulse" />
+              <div className="space-y-4">
+                <div className="h-10 w-48 skeleton" />
+                <div className="h-4 w-full skeleton" />
               </div>
             ) : stressData ? (
               <div className="flex items-center gap-6">
@@ -287,7 +312,7 @@ export default function Dashboard() {
               <p className="text-stone-400 text-xs font-bold uppercase tracking-wider mb-2">🎮 Last Game Score</p>
               <div className="flex-1 flex items-center justify-between">
                 {loading ? (
-                  <div className="h-10 w-16 bg-amber-100 rounded animate-pulse" />
+                  <div className="h-10 w-20 skeleton" />
                 ) : lastGameScore !== null ? (
                   <>
                     <span className="text-4xl font-black text-amber-500">{Math.round(lastGameScore)}</span>
@@ -339,7 +364,7 @@ export default function Dashboard() {
             <button onClick={() => navigate('/score')} className="text-xs text-amber-600 font-semibold hover:underline">Full Report →</button>
           </div>
           {loading ? (
-            <div className="h-44 w-full bg-amber-50 rounded-2xl animate-pulse" />
+            <div className="h-48 w-full skeleton" />
           ) : (
             <StressTrajectoryChart data={trendData} showCognitive={false} />
           )}
@@ -357,13 +382,14 @@ export default function Dashboard() {
               <motion.button
                 key={item.id}
                 onClick={() => navigate(item.path)}
-                className="group bg-white rounded-3xl border border-stone-100 p-6 text-left hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+                className="group bg-white rounded-3xl border border-stone-100 p-6 text-left hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden"
+                whileHover={{ scale: 1.01, rotateX: 1, rotateY: 1 }}
                 whileTap={{ scale: 0.98 }}
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 + i * 0.08, type: 'spring', stiffness: 200, damping: 22 }}
               >
                 {/* Gradient wash on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-[0.06] transition-opacity duration-300 pointer-events-none rounded-3xl`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-[0.08] transition-opacity duration-300 pointer-events-none rounded-3xl`} />
 
                 {/* Badge */}
                 <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full mb-4 inline-block ${item.badgeColor}`}>{item.badge}</span>
@@ -393,10 +419,10 @@ export default function Dashboard() {
             <div className="h-px flex-1 bg-stone-200" />
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.58 }}>
               <LevelCard />
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }}>
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.63 }}>
               <HabitTracker />
             </motion.div>
           </div>

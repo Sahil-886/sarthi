@@ -45,3 +45,23 @@ body {
   background: #fde68a;
   color: #1c1917;
 }
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(to right, #f6f7f8 4%, #f0f2f5 25%, #f6f7f8 36%);
+  background-size: 1000px 100%;
+  animation: shimmer 2.5s infinite linear;
+}
+
+.skeleton {
+  @apply animate-shimmer rounded-xl;
+}
